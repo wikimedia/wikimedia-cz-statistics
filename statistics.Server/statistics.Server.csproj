@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\statistics.Client\statistics.Client.csproj" />
     <ProjectReference Include="..\statistics.Shared\statistics.Shared.csproj" />
+    <ProjectReference Include="..\TrackerClient\TrackerClient.csproj" />
   </ItemGroup>
 
 </Project>
