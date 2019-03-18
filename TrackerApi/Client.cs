@@ -20,6 +20,12 @@ namespace TrackerApi
     //GET
     public partial class TrackerClient
     {
+        public async Task<List<Mediainfo>> GetMediainfos()
+        {
+            var resp = await _http.GetAsync($"tracker/mediainfo/");
+            string respString = await resp.Content.ReadAsStringAsync();
+            return JObject.Parse(respString).ToObject<List<Mediainfo>>();
+        }
         public async Task<Mediainfo> GetMediainfo(int id)
         {
             var resp = await _http.GetAsync($"tracker/mediainfo/{id}");
