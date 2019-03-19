@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Serialization;
 using System.Linq;
+using statistics.Server.Services;
 
 namespace statistics.Server
 {
@@ -20,6 +21,9 @@ namespace statistics.Server
                 opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
                     new[] { "application/octet-stream" });
             });
+
+            services.AddSingleton<AppState>();
+            services.AddSingleton<TrackerApi.TrackerClient>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

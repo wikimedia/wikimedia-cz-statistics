@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using statistics.Server.Services;
 using TrackerApi;
 using WikiClientLibrary.Client;
 using WikiClientLibrary.Sites;
@@ -14,21 +16,14 @@ namespace statistics.Server.Controllers
     [Route("api/[controller]/[action]")]
     public class NumberController : Controller
     {
-        int sum = 0;
-        int isFinished = 0;
-        TrackerClient tc;
-        WikiClient wc;
-        WikiSite cswiki;
-        private async Task<WikiSite> InitWiki(string url)
+        public int Sum { get; set; }
+
+        private readonly AppState _state;
+        public NumberController(AppState state)
         {
-            WikiSite s = new WikiSite(wc, url);
-            await s.Initialization;
-            return s;
-        }
-        public NumberController()
-        {
-            // Init Tracker communication
-            tc = new TrackerClient();
+            _state = state;
+            Sum = _state.FotimeCeskoPhotos;
+            _state.OnFotimeCeskoPhotosUpdated += OnFotimeCeskoPhotosUpdated;
 
             // Init wiki communication
             wc = new WikiClient
@@ -38,28 +33,23 @@ namespace statistics.Server.Controllers
             cswiki = InitWiki("https://cs.wikipedia.org/w/api.php").Result;
         }
 
-        public int FotimeCeskoPhotos()
+        WikiClient wc;
+        WikiSite cswiki;
+        private async Task<WikiSite> InitWiki(string url)
         {
-            Dictionary<int, string> yearToTopicMapper = new Dictionary<int, string>
-            {
-                [2019] = "1.1. Multimédia: Fotíme Česko/Mediagrant",
-                [2018] = "1.1. Fotíme Česko (Mediagrant)18"
-            };
-            foreach (var item in yearToTopicMapper)
-            {
-                GetMediaInfo(item.Value);
-            }
-            while (isFinished != yearToTopicMapper.Count)
-            {
-            }
-            return sum;
+            WikiSite s = new WikiSite(wc, url);
+            await s.Initialization;
+            return s;
         }
 
-        public async void GetMediaInfo(string topic)
+        public int FotimeCeskoPhotos()
         {
-            var tmp = await tc.GetMediainfos(topic);
-            sum += tmp.Count;
-            isFinished += 1;
+            return Sum;
+        }
+
+        public void OnFotimeCeskoPhotosUpdated()
+        {
+            Sum = _state.FotimeCeskoPhotos;
         }
     }
 }
