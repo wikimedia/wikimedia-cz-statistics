@@ -7,7 +7,7 @@ using TrackerApi.JsonModels;
 
 namespace TrackerApi
 {
-    //Constructors
+    #region Constructors
     public partial class TrackerClient
     {
         private readonly HttpClient _http;
@@ -17,7 +17,9 @@ namespace TrackerApi
             _http.BaseAddress = new Uri("https://tracker.wikimedia.cz/api/");
         }
     }
-    //GET
+    #endregion
+
+    #region GET
     public partial class TrackerClient
     {
         public async Task<List<Mediainfo>> GetMediainfos()
@@ -33,5 +35,6 @@ namespace TrackerApi
             return JObject.Parse(respString).ToObject<Mediainfo>();
         }
     }
+    #endregion
 
 }
