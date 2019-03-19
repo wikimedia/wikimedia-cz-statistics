@@ -44,6 +44,7 @@ namespace statistics.Server.Controllers
 
         public int FotimeCeskoPhotos()
         {
+            _state.UpdateFotimeCeskoPhotos();
             return Sum;
         }
 

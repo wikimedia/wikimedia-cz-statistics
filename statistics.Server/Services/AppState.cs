@@ -42,6 +42,7 @@ namespace statistics.Server.Services
         {
             var tmp = await _tc.GetMediainfos(topic);
             FotimeCeskoPhotos += tmp.Count;
+
             return true;
         }
     }
