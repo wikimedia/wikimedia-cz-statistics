@@ -43,6 +43,10 @@ namespace statistics.Server.Controllers
             return await tc.GetMediainfo(9236);
         }
 
+        public int Cislo()
+        {
+            return 10;
+        }
         public async Task<IEnumerable<WikiPage>> MediawikiStrangeResult()
         {
             var generator = new AllPagesGenerator(cswiki)
