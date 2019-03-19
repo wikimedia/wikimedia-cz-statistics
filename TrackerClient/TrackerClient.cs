@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using TrackerApi.JsonModels;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace TrackerApi
 {
@@ -31,7 +32,8 @@ namespace TrackerApi
         {
             var resp = await _http.GetAsync($"tracker/mediainfo/");
             string respString = await resp.Content.ReadAsStringAsync();
-            List<Mediainfo> mediainfos = JObject.Parse(respString).ToObject<List<Mediainfo>>();
+
+            List<Mediainfo> mediainfos = JsonConvert.DeserializeObject<List<Mediainfo>>(respString);
             if (topics != null)
                 mediainfos = mediainfos.Where(mi => topics.Contains(mi.Topic)).ToList();
             return mediainfos;

@@ -7,8 +7,13 @@ namespace TrackerApi.JsonModels
 {
     public class Mediainfo
     {
+        /*
         [JsonProperty("url")]
         public string Url { get; set; }
+        */
+        [JsonProperty("topic")]
+        public string Topic { get; set; }
+        /*
         [JsonProperty("descriptionurl")]
         public string DescriptionUrl { get; set; }
         [JsonProperty("created")]
@@ -25,7 +30,6 @@ namespace TrackerApi.JsonModels
         public string CanonicalTitle { get; set; }
         [JsonProperty("ticket")]
         public string Ticket { get; set; }
-        [JsonProperty("topic")]
-        public string Topic { get; set; }
+        */
     }
 }
