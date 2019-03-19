@@ -9,11 +9,5 @@ namespace statistics.Server.Helpers
 {
     public static class TrackerClientHelper
     {
-        public static async Task<bool> GetMediaInfo(TrackerClient _tc, AppState _state, string topic)
-        {
-            var tmp = await _tc.GetMediainfos(topic);
-            _state.FotimeCeskoPhotosTmp += tmp.Count;
-            return true;
-        }
     }
 }

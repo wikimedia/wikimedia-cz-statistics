@@ -24,7 +24,7 @@ namespace TrackerApi
     #region GET
     public partial class TrackerClient
     {
-        public async Task<List<Mediainfo>> GetMediainfos(string topic = null)
+        public async Task<List<Mediainfo>> GetMediainfos(string topic)
         {
             return await GetMediainfos(new string[] { topic });
         }
