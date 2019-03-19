@@ -18,7 +18,7 @@ namespace statistics.Server.Services
 
         public event Action OnFotimeCeskoPhotosUpdated;
 
-        public async void UpdateFotimeCeskoPhotos()
+        public void UpdateFotimeCeskoPhotos()
         {
             Dictionary<int, string> yearToTopicMapper = new Dictionary<int, string>
             {
