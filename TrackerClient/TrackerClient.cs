@@ -23,13 +23,17 @@ namespace TrackerApi
     #region GET
     public partial class TrackerClient
     {
-        public async Task<List<Mediainfo>> GetMediainfos(string topic=null)
+        public async Task<List<Mediainfo>> GetMediainfos(string topic = null)
+        {
+            return await GetMediainfos(new string[] { topic });
+        }
+        public async Task<List<Mediainfo>> GetMediainfos(string[] topics = null)
         {
             var resp = await _http.GetAsync($"tracker/mediainfo/");
             string respString = await resp.Content.ReadAsStringAsync();
             List<Mediainfo> mediainfos = JObject.Parse(respString).ToObject<List<Mediainfo>>();
-            if (topic != null)
-                mediainfos = mediainfos.Where(mi => mi.Topic == topic).ToList();
+            if (topics != null)
+                mediainfos = mediainfos.Where(mi => topics.Contains(mi.Topic)).ToList();
             return mediainfos;
         }
         public async Task<Mediainfo> GetMediainfo(int id)
