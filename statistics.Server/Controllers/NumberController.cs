@@ -17,27 +17,21 @@ namespace statistics.Server.Controllers
     public class NumberController : Controller
     {
         public int Sum { get; set; }
-
         private readonly AppState _state;
-        public NumberController(AppState state)
+        private readonly WikiClient _wc;
+        WikiSite cswiki;
+        public NumberController(AppState state, WikiClient wc)
         {
             _state = state;
+            _wc = wc;
             Sum = _state.FotimeCeskoPhotos;
             _state.OnFotimeCeskoPhotosUpdated += OnFotimeCeskoPhotosUpdated;
 
-            // Init wiki communication
-            wc = new WikiClient
-            {
-                ClientUserAgent = "Urbanecm's testing webapp (urbanecm@tools.wmflabs.org)"
-            };
             cswiki = InitWiki("https://cs.wikipedia.org/w/api.php").Result;
         }
-
-        WikiClient wc;
-        WikiSite cswiki;
         private async Task<WikiSite> InitWiki(string url)
         {
-            WikiSite s = new WikiSite(wc, url);
+            WikiSite s = new WikiSite(_wc, url);
             await s.Initialization;
             return s;
         }
