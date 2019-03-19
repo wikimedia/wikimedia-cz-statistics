@@ -9,6 +9,7 @@ namespace statistics.Server.Services
     public class AppState
     {
         public int FotimeCeskoPhotos { get; set; } = 0;
+        public int FotimeCeskoPhotosTmp { get; set; } = 0;
 
         private readonly TrackerClient _tc;
         public AppState(TrackerClient tc)
@@ -18,8 +19,10 @@ namespace statistics.Server.Services
 
         public event Action OnFotimeCeskoPhotosUpdated;
 
-        public async void UpdateFotimeCeskoPhotos()
+        public void UpdateFotimeCeskoPhotos()
         {
+            FotimeCeskoPhotosTmp = 0;
+
             Dictionary<int, string> yearToTopicMapper = new Dictionary<int, string>
             {
                 [2019] = "1.1. Multimédia: Fotíme Česko/Mediagrant",
@@ -35,13 +38,15 @@ namespace statistics.Server.Services
 
             Task.WaitAll(tasks.ToArray());
 
+            FotimeCeskoPhotos = FotimeCeskoPhotosTmp;
+
             OnFotimeCeskoPhotosUpdated();
         }
 
         public async Task<bool> GetMediaInfo(string topic)
         {
             var tmp = await _tc.GetMediainfos(topic);
-            FotimeCeskoPhotos += tmp.Count;
+            FotimeCeskoPhotosTmp += tmp.Count;
 
             return true;
         }
