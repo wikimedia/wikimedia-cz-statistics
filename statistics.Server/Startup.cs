@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Serialization;
 using System.Linq;
 using statistics.Server.Services;
+using WikiClientLibrary.Client;
 
 namespace statistics.Server
 {
@@ -24,6 +25,10 @@ namespace statistics.Server
 
             services.AddSingleton<AppState>();
             services.AddSingleton<TrackerApi.TrackerClient>();
+            services.AddSingleton<WikiClient>(new WikiClient
+            {
+                ClientUserAgent = "Urbanecm's testing webapp (urbanecm@tools.wmflabs.org)"
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
