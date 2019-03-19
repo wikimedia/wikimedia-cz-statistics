@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using statistics.Client.Services;
 
 namespace statistics.Client
 {
@@ -7,6 +8,8 @@ namespace statistics.Client
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<AppClient>();
+            services.AddSingleton<AppState>();
         }
 
         public void Configure(IComponentsApplicationBuilder app)
