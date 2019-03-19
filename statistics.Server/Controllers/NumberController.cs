@@ -19,21 +19,15 @@ namespace statistics.Server.Controllers
         public int Sum { get; set; }
         private readonly AppState _state;
         private readonly WikiClient _wc;
-        WikiSite cswiki;
-        public NumberController(AppState state, WikiClient wc)
+        private readonly WikiSite _cswiki;
+        public NumberController(AppState state, WikiClient wc, WikiSite cswiki)
         {
             _state = state;
             _wc = wc;
+            _cswiki = cswiki;
+
             Sum = _state.FotimeCeskoPhotos;
             _state.OnFotimeCeskoPhotosUpdated += OnFotimeCeskoPhotosUpdated;
-
-            cswiki = InitWiki("https://cs.wikipedia.org/w/api.php").Result;
-        }
-        private async Task<WikiSite> InitWiki(string url)
-        {
-            WikiSite s = new WikiSite(_wc, url);
-            await s.Initialization;
-            return s;
         }
 
         public int FotimeCeskoPhotos()
