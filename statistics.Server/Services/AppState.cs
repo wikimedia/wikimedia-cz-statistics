@@ -1,4 +1,5 @@
-﻿using System;
+﻿using statistics.Server.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -33,7 +34,7 @@ namespace statistics.Server.Services
 
             foreach (var item in yearToTopicMapper)
             {
-                tasks.Add(GetMediaInfo(item.Value));
+                tasks.Add(TrackerClientHelper.GetMediaInfo(_tc, this, item.Value));
             }
 
             Task.WaitAll(tasks.ToArray());
@@ -41,14 +42,6 @@ namespace statistics.Server.Services
             FotimeCeskoPhotos = FotimeCeskoPhotosTmp;
 
             OnFotimeCeskoPhotosUpdated();
-        }
-
-        public async Task<bool> GetMediaInfo(string topic)
-        {
-            var tmp = await _tc.GetMediainfos(topic);
-            FotimeCeskoPhotosTmp += tmp.Count;
-
-            return true;
         }
     }
 }
