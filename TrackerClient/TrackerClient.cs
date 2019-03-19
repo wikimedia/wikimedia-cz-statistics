@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using TrackerApi.JsonModels;
+using System.Linq;
 
 namespace TrackerApi
 {
@@ -22,11 +23,14 @@ namespace TrackerApi
     #region GET
     public partial class TrackerClient
     {
-        public async Task<List<Mediainfo>> GetMediainfos()
+        public async Task<List<Mediainfo>> GetMediainfos(string topic=null)
         {
             var resp = await _http.GetAsync($"tracker/mediainfo/");
             string respString = await resp.Content.ReadAsStringAsync();
-            return JObject.Parse(respString).ToObject<List<Mediainfo>>();
+            List<Mediainfo> mediainfos = JObject.Parse(respString).ToObject<List<Mediainfo>>();
+            if (topic != null)
+                mediainfos = mediainfos.Where(mi => mi.Topic == topic).ToList();
+            return mediainfos;
         }
         public async Task<Mediainfo> GetMediainfo(int id)
         {

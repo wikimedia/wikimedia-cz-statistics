@@ -25,5 +25,7 @@ namespace TrackerApi.JsonModels
         public string CanonicalTitle { get; set; }
         [JsonProperty("ticket")]
         public string Ticket { get; set; }
+        [JsonProperty("topic")]
+        public string Topic { get; get; }
     }
 }
