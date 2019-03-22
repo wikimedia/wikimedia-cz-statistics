@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using statistics.Server.Services;
 using TrackerApi;
-using WikiClientLibrary.Client;
-using WikiClientLibrary.Sites;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,17 +15,16 @@ namespace statistics.Server.Controllers
     public class NumberController : Controller
     {
         private int _fotimeCeskoNumberOfPhotos;
+        private int _fotimeCeskoNumberOfUsages;
         private readonly AppState _state;
-        private readonly WikiClient _wc;
-        private readonly WikiSite _cswiki;
-        public NumberController(AppState state, WikiClient wc, WikiSite cswiki)
+        public NumberController(AppState state)
         {
             _state = state;
-            _wc = wc;
-            _cswiki = cswiki;
 
             _fotimeCeskoNumberOfPhotos = _state.FotimeCeskoNumberOfPhotos;
+            _fotimeCeskoNumberOfUsages = _state.FotimeCeskoNumberOfUsages;
             _state.OnFotimeCeskoNumberOfPhotosUpdated += OnFotimeCeskoNumberOfPhotosUpdated;
+            _state.OnFotimeCeskoNumberOfUsagesUpdated += OnFotimeCeskoNumberOfUsagesUpdated;
         }
 
         public int FotimeCeskoNumberOfPhotos()
@@ -35,9 +32,19 @@ namespace statistics.Server.Controllers
             return _fotimeCeskoNumberOfPhotos;
         }
 
+        public int FotimeCeskoNumberOfUsages()
+        {
+            return _fotimeCeskoNumberOfUsages;
+        }
+
         public void OnFotimeCeskoNumberOfPhotosUpdated()
         {
             _fotimeCeskoNumberOfPhotos = _state.FotimeCeskoNumberOfPhotos;
+        }
+
+        public void OnFotimeCeskoNumberOfUsagesUpdated()
+        {
+            _fotimeCeskoNumberOfUsages = _state.FotimeCeskoNumberOfUsages;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using statistics.Server.Helpers;
+﻿using MediaWikiClient;
+using statistics.Server.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +11,14 @@ namespace statistics.Server.Services
     public class AppState
     {
         public int FotimeCeskoNumberOfPhotos { get; set; } = 0;
+        public int FotimeCeskoNumberOfUsages { get; set; } = 0;
 
         private readonly TrackerClient _tc;
-        public AppState(TrackerClient tc)
+        private readonly MediaWiki _commonswiki;
+        public AppState(TrackerClient tc, MediaWiki commonswiki)
         {
             _tc = tc;
+            _commonswiki = commonswiki;
         }
 
         public event Action OnFotimeCeskoNumberOfPhotosUpdated;
@@ -24,6 +28,18 @@ namespace statistics.Server.Services
         {
             FotimeCeskoNumberOfPhotos = (await _tc.GetMediainfos()).Count;
             OnFotimeCeskoNumberOfPhotosUpdated();
+        }
+
+        public async void UpdateFotimeCeskoNumberOfUsages()
+        {
+            int res = 0;
+            var mediainfos = await _tc.GetMediainfos();
+            foreach (var mediainfo in mediainfos)
+            {
+                res += (await _commonswiki.GetGlobalUsagesOfFile(mediainfo.Name)).Count; // TODO: Get rid of await in foreach
+            }
+            FotimeCeskoNumberOfUsages = res;
+            OnFotimeCeskoNumberOfUsagesUpdated();
         }
     }
 }
