@@ -30,12 +30,32 @@ namespace MediaWikiClient
             return "?" + string.Join("&", array);
         }
 
-        public async Task<GenericResponse> ApiCallAsync(NameValueCollection parameters)
+        public async Task<GenericResponse> ApiCallAsync(NameValueCollection parameters, bool resolveContinue=false)
         {
             var querystring = ToQueryString(parameters);
             var resp = await _http.GetAsync(querystring);
             string respString = await resp.Content.ReadAsStringAsync();
-            return JObject.Parse(respString).ToObject<GenericResponse>();
+            var data = JObject.Parse(respString).ToObject<GenericResponse>();
+
+            if (resolveContinue && data.Continue != null)
+                await ResolveContinueAsync(data, parameters);
+
+            return data;
+        }
+
+        private async Task ResolveContinueAsync(GenericResponse data, NameValueCollection parameters)
+        {
+            if (data.Continue != null)
+            {
+                foreach (KeyValuePair<string, string> contParam in data.Continue)
+                {
+                    parameters[contParam.Key] = contParam.Value;
+                }
+                var newData = await ApiCallAsync(parameters);
+                data.Update(newData);
+                if (data.Continue != null)
+                    await ResolveContinueAsync(data, parameters);
+            }
         }
     }
     #endregion
@@ -50,7 +70,7 @@ namespace MediaWikiClient
             parameters["prop"] = "globalusage";
             parameters["titles"] = filename;
             parameters["gulimit"] = "max";
-            var resp = await ApiCallAsync(parameters);
+            var resp = await ApiCallAsync(parameters, true);
             return resp.Pages[resp.Pages.Keys.ToArray()[0]].GlobalUsage;
         }
     }
