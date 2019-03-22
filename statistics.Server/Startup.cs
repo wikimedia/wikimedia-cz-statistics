@@ -25,7 +25,7 @@ namespace statistics.Server
 
             services.AddSingleton<AppState>();
             services.AddSingleton<TrackerApi.TrackerClient>();
-            services.AddSingleton<MediaWiki>();
+            services.AddSingleton(new MediaWiki("commons.wikimedia.org"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
