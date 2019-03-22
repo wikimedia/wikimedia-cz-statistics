@@ -5,6 +5,7 @@ using System.Net.Mail;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using statistics.Server.Services;
+using statistics.Shared;
 using TrackerApi;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -20,16 +21,18 @@ namespace statistics.Server.Controllers
         public NumberController(AppState state)
         {
             _state = state;
-
-            _fotimeCeskoNumberOfPhotos = _state.FotimeCeskoNumberOfPhotos;
-            _fotimeCeskoNumberOfUsages = _state.FotimeCeskoNumberOfUsages;
             _state.OnFotimeCeskoNumberOfPhotosUpdated += OnFotimeCeskoNumberOfPhotosUpdated;
-            _state.OnFotimeCeskoNumberOfUsagesUpdated += OnFotimeCeskoNumberOfUsagesUpdated;
+            _fotimeCeskoNumberOfPhotos = _state.FotimeCeskoNumberOfPhotos;
+            _state.OnFotimeCeskoNumberOfPhotosUpdated += OnFotimeCeskoNumberOfUsagesUpdated;
+            _fotimeCeskoNumberOfPhotos = _state.FotimeCeskoNumberOfUsages;
         }
 
-        public int FotimeCeskoNumberOfPhotos()
+        public Number FotimeCeskoNumberOfPhotos()
         {
-            return _fotimeCeskoNumberOfPhotos;
+            return new Number
+            {
+                value = _fotimeCeskoNumberOfPhotos
+            };
         }
 
         public int FotimeCeskoNumberOfUsages()

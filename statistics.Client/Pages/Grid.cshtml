@@ -1,8 +1,19 @@
 ﻿@page "/grid"
+@using statistics.Shared
 @inherits GridPage
 
-<div class="grid">
-    <div class="tile">
-        @NumberOfPhotos
-    </div>
+<div class="row">
+    @foreach (var tile in Tiles)
+    {
+        <div class="col-md-4">
+            <h1>@tile.name</h1>
+            <span>@tile.url</span>
+            @switch (tile.type.ToLower())
+            {
+                case "number":
+                    @(Json.Deserialize<Number>(tile.Payload).value);
+                    break;
+            }
+        </div>
+    }
 </div>
