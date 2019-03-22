@@ -5,6 +5,7 @@ using System.Net.Mail;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using statistics.Server.Services;
+using statistics.Shared;
 using TrackerApi;
 using WikiClientLibrary.Client;
 using WikiClientLibrary.Sites;
@@ -26,13 +27,16 @@ namespace statistics.Server.Controllers
             _wc = wc;
             _cswiki = cswiki;
 
-            _fotimeCeskoNumberOfPhotos = _state.FotimeCeskoNumberOfPhotos;
             _state.OnFotimeCeskoNumberOfPhotosUpdated += OnFotimeCeskoNumberOfPhotosUpdated;
+            _fotimeCeskoNumberOfPhotos = _state.FotimeCeskoNumberOfPhotos;
         }
 
-        public int FotimeCeskoNumberOfPhotos()
+        public Number FotimeCeskoNumberOfPhotos()
         {
-            return _fotimeCeskoNumberOfPhotos;
+            return new Number
+            {
+                value = _fotimeCeskoNumberOfPhotos
+            };
         }
 
         public void OnFotimeCeskoNumberOfPhotosUpdated()

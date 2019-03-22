@@ -17,6 +17,8 @@ namespace statistics.Server.Controllers
         {
             _state = state;
         }
+
+        [HttpGet]
         public bool UpdateAll()
         {
             _state.UpdateFotimeCeskoNumberOfPhotos();
