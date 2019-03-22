@@ -19,7 +19,7 @@ namespace statistics.Server.Controllers
         }
         public bool UpdateAll()
         {
-            _state.UpdateFotimeCeskoPhotos();
+            _state.UpdateFotimeCeskoNumberOfPhotos();
             return true;
         }
     }
