@@ -22,6 +22,7 @@ namespace statistics.Server.Controllers
         public bool UpdateAll()
         {
             _state.UpdateFotimeCeskoNumberOfPhotos();
+            _state.UpdateFotimeCeskoNumberOfUsages();
             return true;
         }
     }
