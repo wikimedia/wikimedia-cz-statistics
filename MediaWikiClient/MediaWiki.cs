@@ -48,7 +48,6 @@ namespace MediaWikiClient
             parameters["action"] = "query";
             parameters["format"] = "json";
             parameters["prop"] = "globalusage";
-            parameters["list"] = "allusers";
             parameters["titles"] = filename;
             parameters["gulimit"] = "max";
             var resp = await ApiCallAsync(parameters);
