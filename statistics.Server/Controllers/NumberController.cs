@@ -27,15 +27,15 @@ namespace statistics.Server.Controllers
             _cswiki = cswiki;
 
             Sum = _state.FotimeCeskoPhotos;
-            _state.OnFotimeCeskoPhotosUpdated += OnFotimeCeskoPhotosUpdated;
+            _state.OnFotimeCeskoNumberOfPhotosUpdated += OnFotimeCeskoNumberOfPhotosUpdated;
         }
 
-        public int FotimeCeskoPhotos()
+        public int FotimeCeskoNumberOfPhotos()
         {
             return Sum;
         }
 
-        public void OnFotimeCeskoPhotosUpdated()
+        public void OnFotimeCeskoNumberOfPhotosUpdated()
         {
             Sum = _state.FotimeCeskoPhotos;
         }

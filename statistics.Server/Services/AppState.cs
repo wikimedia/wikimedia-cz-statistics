@@ -17,12 +17,12 @@ namespace statistics.Server.Services
             _tc = tc;
         }
 
-        public event Action OnFotimeCeskoPhotosUpdated;
+        public event Action OnFotimeCeskoNumberOfPhotosUpdated;
 
-        public async void UpdateFotimeCeskoPhotos()
+        public async void UpdateFotimeCeskoNumberOfPhotos()
         {
             FotimeCeskoPhotos = (await _tc.GetMediainfos()).Count;
-            OnFotimeCeskoPhotosUpdated();
+            OnFotimeCeskoNumberOfPhotosUpdated();
         }
     }
 }
