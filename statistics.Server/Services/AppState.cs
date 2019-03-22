@@ -9,7 +9,7 @@ namespace statistics.Server.Services
 {
     public class AppState
     {
-        public int FotimeCeskoPhotos { get; set; } = 0;
+        public int FotimeCeskoNumberOfPhotos { get; set; } = 0;
 
         private readonly TrackerClient _tc;
         public AppState(TrackerClient tc)
@@ -18,10 +18,11 @@ namespace statistics.Server.Services
         }
 
         public event Action OnFotimeCeskoNumberOfPhotosUpdated;
+        public event Action OnFotimeCeskoNumberOfUsagesUpdated;
 
         public async void UpdateFotimeCeskoNumberOfPhotos()
         {
-            FotimeCeskoPhotos = (await _tc.GetMediainfos()).Count;
+            FotimeCeskoNumberOfPhotos = (await _tc.GetMediainfos()).Count;
             OnFotimeCeskoNumberOfPhotosUpdated();
         }
     }

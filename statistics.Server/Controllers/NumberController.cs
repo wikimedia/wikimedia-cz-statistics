@@ -16,7 +16,7 @@ namespace statistics.Server.Controllers
     [Route("api/[controller]/[action]")]
     public class NumberController : Controller
     {
-        public int Sum { get; set; }
+        private int _fotimeCeskoNumberOfPhotos;
         private readonly AppState _state;
         private readonly WikiClient _wc;
         private readonly WikiSite _cswiki;
@@ -26,18 +26,18 @@ namespace statistics.Server.Controllers
             _wc = wc;
             _cswiki = cswiki;
 
-            Sum = _state.FotimeCeskoPhotos;
+            _fotimeCeskoNumberOfPhotos = _state.FotimeCeskoNumberOfPhotos;
             _state.OnFotimeCeskoNumberOfPhotosUpdated += OnFotimeCeskoNumberOfPhotosUpdated;
         }
 
         public int FotimeCeskoNumberOfPhotos()
         {
-            return Sum;
+            return _fotimeCeskoNumberOfPhotos;
         }
 
         public void OnFotimeCeskoNumberOfPhotosUpdated()
         {
-            Sum = _state.FotimeCeskoPhotos;
+            _fotimeCeskoNumberOfPhotos = _state.FotimeCeskoNumberOfPhotos;
         }
     }
 }
