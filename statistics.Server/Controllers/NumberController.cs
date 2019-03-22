@@ -35,9 +35,12 @@ namespace statistics.Server.Controllers
             };
         }
 
-        public int FotimeCeskoNumberOfUsages()
+        public Number FotimeCeskoNumberOfUsages()
         {
-            return _fotimeCeskoNumberOfUsages;
+            return new Number
+            {
+                value = _fotimeCeskoNumberOfUsages
+            };
         }
 
         public void OnFotimeCeskoNumberOfPhotosUpdated()
