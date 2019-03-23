@@ -30,7 +30,7 @@ namespace MediaWikiClient
             return "?" + string.Join("&", array);
         }
 
-        public async Task<GenericResponse> ApiCallAsync(NameValueCollection parameters, bool resolveContinue=false)
+        public async Task<GenericResponse> ApiCallAsync(NameValueCollection parameters, bool resolveContinue=true)
         {
             var querystring = ToQueryString(parameters);
             var resp = await _http.GetAsync(querystring);
@@ -51,7 +51,7 @@ namespace MediaWikiClient
                 {
                     parameters[contParam.Key] = contParam.Value;
                 }
-                var newData = await ApiCallAsync(parameters);
+                var newData = await ApiCallAsync(parameters, false);
                 data.Update(newData);
                 if (data.Continue != null)
                     await ResolveContinueAsync(data, parameters);
@@ -70,7 +70,7 @@ namespace MediaWikiClient
             parameters["prop"] = "globalusage";
             parameters["titles"] = filename;
             parameters["gulimit"] = "max";
-            var resp = await ApiCallAsync(parameters, true);
+            var resp = await ApiCallAsync(parameters);
             return resp.Pages[resp.Pages.Keys.ToArray()[0]].GlobalUsage;
         }
     }
