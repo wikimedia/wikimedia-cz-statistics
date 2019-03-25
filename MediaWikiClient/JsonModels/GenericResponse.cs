@@ -1,10 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Runtime.Serialization;
-using System.Threading;
 
 namespace MediaWikiClient.JsonModels
 {
@@ -40,7 +37,9 @@ namespace MediaWikiClient.JsonModels
                     bool isList = type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>);
                     if (isList)
                     {
-                        // List<GlobalUsage> theirUsages = ()property.GetValue(theirPage);
+                        dynamic theirValue = property.GetValue(theirPage);
+                        dynamic ourValue = property.GetValue(ourPage);
+                        ourValue.AddRange(theirValue);
                     }
                 }
             }*/
