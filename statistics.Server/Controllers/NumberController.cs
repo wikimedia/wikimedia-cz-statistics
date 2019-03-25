@@ -21,9 +21,8 @@ namespace statistics.Server.Controllers
         public NumberController(AppState state)
         {
             _state = state;
-            _state.OnFotimeCeskoNumberOfPhotosUpdated += OnFotimeCeskoNumberOfPhotosUpdated;
+
             _fotimeCeskoNumberOfPhotos = _state.FotimeCeskoNumberOfPhotos;
-            _state.OnFotimeCeskoNumberOfPhotosUpdated += OnFotimeCeskoNumberOfUsagesUpdated;
             _fotimeCeskoNumberOfPhotos = _state.FotimeCeskoNumberOfUsages;
         }
 
@@ -41,16 +40,6 @@ namespace statistics.Server.Controllers
             {
                 value = _fotimeCeskoNumberOfUsages
             };
-        }
-
-        public void OnFotimeCeskoNumberOfPhotosUpdated()
-        {
-            _fotimeCeskoNumberOfPhotos = _state.FotimeCeskoNumberOfPhotos;
-        }
-
-        public void OnFotimeCeskoNumberOfUsagesUpdated()
-        {
-            _fotimeCeskoNumberOfUsages = _state.FotimeCeskoNumberOfUsages;
         }
     }
 }
