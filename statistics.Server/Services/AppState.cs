@@ -21,13 +21,9 @@ namespace statistics.Server.Services
             _commonswiki = commonswiki;
         }
 
-        public event Action OnFotimeCeskoNumberOfPhotosUpdated;
-        public event Action OnFotimeCeskoNumberOfUsagesUpdated;
-
         public async void UpdateFotimeCeskoNumberOfPhotos()
         {
             FotimeCeskoNumberOfPhotos = (await _tc.GetMediainfos()).Count;
-            OnFotimeCeskoNumberOfPhotosUpdated();
         }
 
         public async void UpdateFotimeCeskoNumberOfUsages()
@@ -39,7 +35,6 @@ namespace statistics.Server.Services
                 res += (await _commonswiki.GetGlobalUsagesOfFile(mediainfo.Name)).Count; // TODO: Get rid of await in foreach
             }
             FotimeCeskoNumberOfUsages = res;
-            OnFotimeCeskoNumberOfUsagesUpdated();
         }
     }
 }
