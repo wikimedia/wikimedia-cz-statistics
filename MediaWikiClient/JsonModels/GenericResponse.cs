@@ -1,6 +1,9 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Runtime.Serialization;
 
 namespace MediaWikiClient.JsonModels
@@ -25,8 +28,8 @@ namespace MediaWikiClient.JsonModels
 
         public void Update(GenericResponse response)
         {
-            // TODO: Zeptat se Langa ml
-            /*foreach (KeyValuePair<string, Page> item in Pages)
+            Continue = response.Continue;
+            foreach (KeyValuePair<string, Page> item in Pages)
             {
                 Page ourPage = item.Value;
                 Page theirPage = response.Pages[item.Key];
@@ -37,21 +40,14 @@ namespace MediaWikiClient.JsonModels
                     bool isList = type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>);
                     if (isList)
                     {
-                        dynamic theirValue = property.GetValue(theirPage);
-                        dynamic ourValue = property.GetValue(ourPage);
-                        ourValue.AddRange(theirValue);
+                        var theirValue = property.GetValue(theirPage) as IList;
+                        var ourValue = property.GetValue(ourPage) as IList;
+                        foreach (var i in theirValue)
+                        {
+                            ourValue.Add(i);
+                        }
                     }
                 }
-            }*/
-
-            // Manual updating
-            Continue = response.Continue;
-            foreach (KeyValuePair<string, Page> item in Pages)
-            {
-                Page ourPage = item.Value;
-                Page theirPage = response.Pages[item.Key];
-
-                ourPage.GlobalUsage.AddRange(theirPage.GlobalUsage);
             }
         }
     }
