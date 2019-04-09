@@ -7,6 +7,8 @@ using Newtonsoft.Json.Serialization;
 using System.Linq;
 using statistics.Server.Services;
 using MediaWikiClient;
+using NSwag;
+using NSwag.SwaggerGeneration.Processors.Security;
 
 namespace statistics.Server
 {
@@ -21,6 +23,18 @@ namespace statistics.Server
             {
                 opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
                     new[] { "application/octet-stream" });
+            });
+
+
+            services.AddSwaggerDocument(config =>
+            {
+                config.PostProcess = document =>
+                {
+                    document.Info.Version = "v1";
+                    document.Info.Title = "Statistics Api";
+                    document.Info.Description = "Statistics api";
+                    document.Info.TermsOfService = "None";
+                };
             });
 
             services.AddSingleton<AppState>();
@@ -38,6 +52,10 @@ namespace statistics.Server
                 app.UseDeveloperExceptionPage();
                 app.UseBlazorDebugging();
             }
+
+
+            app.UseSwagger();
+            app.UseSwaggerUi3();
 
             app.UseMvc(routes =>
             {
