@@ -1,5 +1,4 @@
 ﻿using MediaWikiClient;
-using statistics.Server.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
