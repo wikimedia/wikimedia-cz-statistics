@@ -8,6 +8,18 @@ namespace MediaWikiClient.JsonModels
 {
     public class Page
     {
+        private string _project = null;
+        public string Project
+        {
+            get => _project;
+            set
+            {
+                if (_project == null)
+                {
+                    _project = value;
+                }
+            }
+        }
         [JsonProperty("pageid")]
         public int PageId { get; set; }
         [JsonProperty("ns")]
@@ -15,7 +27,21 @@ namespace MediaWikiClient.JsonModels
         [JsonProperty("title")]
         public string Title { get; set; }
         [JsonProperty("globalusage")]
-        public List<GlobalUsage> GlobalUsage { get; set; }
+        public List<GlobalUsage> globalUsage;
+        public List<GlobalUsage> GlobalUsage {
+            get
+            {
+                if (globalUsage == null)
+                {
+                    // TODO: Make this work for non-standard ApiUrls
+                    var tmp = new MediaWiki(Project).GetGlobalUsagesOfFile(Title);
+                    globalUsage = tmp.Result;
+                    
+                }
+                return globalUsage;
+            }
+            set => globalUsage = value;
+        }
 
     }
 }

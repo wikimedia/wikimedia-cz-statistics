@@ -15,8 +15,11 @@ namespace MediaWikiClient
     public partial class MediaWiki
     {
         private readonly HttpClient _http;
+        public string Project { get; private set; }
         public MediaWiki(string project, string apiUrl="/w/api.php", string proto="https")
         {
+            Project = project;
+
             _http = new HttpClient();
             _http.BaseAddress = new Uri($"{proto}://{project}/{apiUrl}");
         }
@@ -62,16 +65,37 @@ namespace MediaWikiClient
     #region GETs
     public partial class MediaWiki
     {
+        public static NameValueCollection DefaultParameters
+        {
+            get => new NameValueCollection
+            {
+                {"format", "json" }
+            };
+        }
         public async Task<List<GlobalUsage>> GetGlobalUsagesOfFile(string filename)
         {
-            NameValueCollection parameters = new NameValueCollection();
+            var page = await GetPage(filename, new NameValueCollection
+            {
+                {"prop", "globalusage" },
+                {"gulimit", "max" }
+
+            });
+            return page.GlobalUsage;
+        }
+
+        public async Task<Page> GetPage(string pagename, NameValueCollection extraParams=null)
+        {
+            NameValueCollection parameters = DefaultParameters;
             parameters["action"] = "query";
-            parameters["format"] = "json";
-            parameters["prop"] = "globalusage";
-            parameters["titles"] = filename;
-            parameters["gulimit"] = "max";
+            parameters["titles"] = pagename;
+            foreach (string key in extraParams)
+            {
+                parameters[key] = extraParams[key];
+            }
             var resp = await ApiCallAsync(parameters);
-            return resp.Pages[resp.Pages.Keys.ToArray()[0]].GlobalUsage;
+            var page = resp.Pages[resp.Pages.Keys.ToArray()[0]];
+            page.Project = Project;
+            return page;
         }
     }
     #endregion
