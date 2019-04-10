@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using TrackerApi;
-using TrackerApi.JsonModels;
+using TrackerClient;
+using TrackerClient.JsonModels;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,11 +13,11 @@ namespace statistics.Server.Controllers
     [Route("api/[controller]/[action]")]
     public class TestController : Controller
     {
-        TrackerClient tc;
+        Tracker tc;
         public TestController()
         {
             // Init Tracker communication
-            tc = new TrackerClient();
+            tc = new Tracker();
         }
         public async Task<Mediainfo> TohleJeSubNeco()
         {

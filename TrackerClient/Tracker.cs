@@ -3,17 +3,17 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using TrackerApi.JsonModels;
+using TrackerClient.JsonModels;
 using System.Linq;
 using Newtonsoft.Json;
 
-namespace TrackerApi
+namespace TrackerClient
 {
     #region Constructors
-    public partial class TrackerClient
+    public partial class Tracker
     {
         private readonly HttpClient _http;
-        public TrackerClient()
+        public Tracker()
         {
             _http = new HttpClient();
             _http.BaseAddress = new Uri("https://tracker.wikimedia.cz/api/");
@@ -22,7 +22,7 @@ namespace TrackerApi
     #endregion
 
     #region GET
-    public partial class TrackerClient
+    public partial class Tracker
     {
         public async Task<List<Mediainfo>> GetMediainfos(Topic topic)
         {

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TrackerApi;
+using TrackerClient;
 
 namespace statistics.Server.Services
 {
@@ -12,9 +12,9 @@ namespace statistics.Server.Services
         public int FotimeCeskoNumberOfPhotos { get; set; } = 0;
         public int FotimeCeskoNumberOfUsages { get; set; } = 0;
 
-        private readonly TrackerClient _tc;
+        private readonly Tracker _tc;
         private readonly MediaWiki _commonswiki;
-        public AppState(TrackerClient tc, MediaWiki commonswiki)
+        public AppState(Tracker tc, MediaWiki commonswiki)
         {
             _tc = tc;
             _commonswiki = commonswiki;

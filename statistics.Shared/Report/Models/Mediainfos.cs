@@ -1,7 +1,7 @@
 ﻿using statistics.Shared.Report.Interfaces;
 using System.Collections.Generic;
-using TrackerApi;
-using TrackerApi.JsonModels;
+using TrackerClient;
+using TrackerClient.JsonModels;
 
 namespace statistics.Shared.Report.Models
 {
@@ -16,7 +16,7 @@ namespace statistics.Shared.Report.Models
         }
         public Mediainfos(params Topic[] topics)
         {
-            TrackerClient tc = new TrackerClient();
+            Tracker tc = new Tracker();
             mediainfos = tc.GetMediainfos(topics).Result;
         }
     }
