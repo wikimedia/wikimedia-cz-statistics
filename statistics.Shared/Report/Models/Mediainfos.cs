@@ -5,7 +5,7 @@ using TrackerApi.JsonModels;
 
 namespace statistics.Shared.Report.Models
 {
-    class Mediainfos : ICountable
+    public class Mediainfos : ICountable
     {
         private List<Mediainfo> mediainfos;
         public Mediainfo[] Media { get => mediainfos.ToArray(); }
@@ -14,7 +14,7 @@ namespace statistics.Shared.Report.Models
         {
             mediainfos = new List<Mediainfo>();
         }
-        public Mediainfos(Topic[] topics)
+        public Mediainfos(params Topic[] topics)
         {
             TrackerClient tc = new TrackerClient();
             mediainfos = tc.GetMediainfos(topics).Result;
