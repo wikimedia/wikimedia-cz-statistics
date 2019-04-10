@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TrackerApi.JsonModels;
 using System.Linq;
 using Newtonsoft.Json;
+using TrackerClient.JsonModels;
 
 namespace TrackerApi
 {
@@ -24,18 +25,18 @@ namespace TrackerApi
     #region GET
     public partial class TrackerClient
     {
-        public async Task<List<Mediainfo>> GetMediainfos(string topic)
+        public async Task<List<Mediainfo>> GetMediainfos(Topic topic)
         {
-            return await GetMediainfos(new string[] { topic });
+            return await GetMediainfos(new Topic[] { topic });
         }
-        public async Task<List<Mediainfo>> GetMediainfos(string[] topics = null)
+        public async Task<List<Mediainfo>> GetMediainfos(Topic[] topics = null)
         {
             var resp = await _http.GetAsync($"tracker/mediainfo/");
             string respString = await resp.Content.ReadAsStringAsync();
 
             List<Mediainfo> mediainfos = JsonConvert.DeserializeObject<List<Mediainfo>>(respString);
             if (topics != null)
-                mediainfos = mediainfos.Where(mi => topics.Contains(mi.Topic)).ToList();
+                mediainfos = mediainfos.Where(mi => topics.Select(t => t.Name).Contains(mi.Topic)).ToList();
             return mediainfos;
         }
         public async Task<Mediainfo> GetMediainfo(int id)
