@@ -1,4 +1,4 @@
-﻿namespace StatsClient.JsonModels
+﻿namespace WikistatsClient.JsonModels
 {
     public class TopByEditsTop
     {

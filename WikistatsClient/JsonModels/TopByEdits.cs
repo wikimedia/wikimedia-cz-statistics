@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace StatsClient.JsonModels
+namespace WikistatsClient.JsonModels
 {
     public class TopByEdits
     {

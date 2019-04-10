@@ -1,17 +1,17 @@
 ﻿using Newtonsoft.Json.Linq;
-using StatsClient.JsonModels;
+using WikistatsClient.JsonModels;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace StatsClient
+namespace WikistatsClient
 {
     #region Constructors and helpers
-    public partial class Stats
+    public partial class Wikistats
     {
         private readonly HttpClient _http;
         public string Project { get; private set; }
-        public Stats(string project)
+        public Wikistats(string project)
         {
             Project = project;
 
@@ -29,7 +29,7 @@ namespace StatsClient
     #endregion
 
     #region GETs
-    public partial class Stats
+    public partial class Wikistats
     {
         public async Task<Response<TopByEdits>> TopByEdits(string editorType, string pageType, int year, int month, int? day=null)
         {
