@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using TrackerApi.JsonModels;
 using System.Linq;
 using Newtonsoft.Json;
-using TrackerClient.JsonModels;
 
 namespace TrackerApi
 {
@@ -44,6 +43,13 @@ namespace TrackerApi
             var resp = await _http.GetAsync($"tracker/mediainfo/{id}");
             string respString = await resp.Content.ReadAsStringAsync();
             return JObject.Parse(respString).ToObject<Mediainfo>();
+        }
+
+        public async Task<Topic> GetTopic(int id)
+        {
+            var resp = await _http.GetAsync($"tracker/topics/{id}");
+            string respString = await resp.Content.ReadAsStringAsync();
+            return JObject.Parse(respString).ToObject<Topic>();
         }
     }
     #endregion
