@@ -8,7 +8,7 @@ namespace statistics.Shared.Report.Models
     public class Mediainfos : ICountable
     {
         private List<Mediainfo> mediainfos;
-        public Mediainfo[] Media { get => mediainfos.ToArray(); }
+        public Mediainfo[] Media => mediainfos.ToArray(); 
         public int Count => mediainfos.Count;
         public Mediainfos()
         {
