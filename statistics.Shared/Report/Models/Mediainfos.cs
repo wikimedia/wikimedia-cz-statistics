@@ -9,7 +9,7 @@ namespace statistics.Shared.Report.Models
     {
         private List<Mediainfo> mediainfos;
         public Mediainfo[] Media { get => mediainfos.ToArray(); }
-        public int Count() => mediainfos.Count;
+        public int Count => mediainfos.Count;
         public Mediainfos()
         {
             mediainfos = new List<Mediainfo>();
