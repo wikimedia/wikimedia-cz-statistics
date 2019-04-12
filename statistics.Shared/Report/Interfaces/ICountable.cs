@@ -6,6 +6,6 @@ namespace statistics.Shared.Report.Interfaces
 {
     interface ICountable
     {
-        int Count();
+        int Count { get; }
     }
 }
