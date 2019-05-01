@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace statistics.Shared
+namespace Statistics.Shared
 {
     public class Number
     {

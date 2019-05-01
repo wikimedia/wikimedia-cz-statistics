@@ -1,10 +1,10 @@
-﻿using statistics.Shared.Report.Interfaces;
+﻿using Statistics.Shared.Report.Interfaces;
 using System;
 using System.Collections.Generic;
 using TrackerClient;
 using TrackerClient.JsonModels;
 
-namespace statistics.Shared.Report.Models
+namespace Statistics.Shared.Report.Models
 {
     public class Mediainfos : ICountable
     {
