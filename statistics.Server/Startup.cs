@@ -1,16 +1,15 @@
+using MediaWikiClient;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Serialization;
-using System.Linq;
 using statistics.Server.Services;
-using MediaWikiClient;
-using NSwag;
-using NSwag.SwaggerGeneration.Processors.Security;
+using System.Linq;
+using TrackerClient;
 
-namespace statistics.Server
+namespace Statistics.Server
 {
     public class Startup
     {
@@ -25,7 +24,6 @@ namespace statistics.Server
                     new[] { "application/octet-stream" });
             });
 
-
             services.AddSwaggerDocument(config =>
             {
                 config.PostProcess = document =>
@@ -38,7 +36,7 @@ namespace statistics.Server
             });
 
             services.AddSingleton<AppState>();
-            services.AddSingleton<TrackerApi.TrackerClient>();
+            services.AddSingleton<Tracker>();
             services.AddSingleton(new MediaWiki("commons.wikimedia.org"));
         }
 
@@ -53,13 +51,14 @@ namespace statistics.Server
                 app.UseBlazorDebugging();
             }
 
-
             app.UseSwagger();
             app.UseSwaggerUi3();
 
-            app.UseMvc(routes =>
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(name: "default", template: "{controller}/{action}/{id?}");
+                endpoints.MapDefaultControllerRoute();
             });
 
             app.UseBlazor<Client.Startup>();

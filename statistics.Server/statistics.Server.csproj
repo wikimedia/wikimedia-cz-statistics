@@ -10,17 +10,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.Server" Version="0.9.0-preview3-19154-02" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Server" Version="3.0.0-preview3-19153-02" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.0-preview3-19153-02" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
-    <PackageReference Include="NSwag.AspNetCore" Version="12.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Server" Version="3.0.0-preview4-19216-03" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.0-preview4-19216-03" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="NSwag.AspNetCore" Version="12.2.4" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MediaWikiClient\MediaWikiClient.csproj" />
-    <ProjectReference Include="..\statistics.Client\statistics.Client.csproj" />
-    <ProjectReference Include="..\statistics.Shared\statistics.Shared.csproj" />
+    <ProjectReference Include="..\Statistics.Client\Statistics.Client.csproj" />
+    <ProjectReference Include="..\Statistics.Shared\Statistics.Shared.csproj" />
     <ProjectReference Include="..\TrackerClient\TrackerClient.csproj" />
   </ItemGroup>
 

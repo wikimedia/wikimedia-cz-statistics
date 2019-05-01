@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Blazor.Hosting;
 
-namespace statistics.Client
+namespace Statistics.Client
 {
     public class Program
     {
