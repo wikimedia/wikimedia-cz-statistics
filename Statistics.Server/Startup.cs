@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Serialization;
-using statistics.Server.Services;
 using System.Linq;
 using TrackerClient;
 
@@ -35,7 +34,6 @@ namespace Statistics.Server
                 };
             });
 
-            services.AddSingleton<AppState>();
             services.AddSingleton<Tracker>();
             services.AddSingleton(new MediaWiki("commons.wikimedia.org"));
         }

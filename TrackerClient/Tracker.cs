@@ -32,7 +32,6 @@ namespace TrackerClient
         {
             var resp = await _http.GetAsync($"tracker/mediainfo/");
             string respString = await resp.Content.ReadAsStringAsync();
-
             List<Mediainfo> mediainfos = JsonConvert.DeserializeObject<List<Mediainfo>>(respString);
             if (topics != null)
                 mediainfos = mediainfos.Where(mi => topics.Select(t => t.Name).Contains(mi.Topic)).ToList();
@@ -50,6 +49,16 @@ namespace TrackerClient
             var resp = await _http.GetAsync($"tracker/topics/{id}");
             string respString = await resp.Content.ReadAsStringAsync();
             return JObject.Parse(respString).ToObject<Topic>();
+        }
+
+        public async Task<Topic[]> GetTopics(int[] ids)
+        {
+            Topic[] res = new Topic[ids.Length];
+            for (int i = 0; i < ids.Length; i++)
+            {
+                res[i] = await GetTopic(ids[i]);
+            }
+            return res;
         }
     }
     #endregion

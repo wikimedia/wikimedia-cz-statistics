@@ -1,4 +1,5 @@
 ﻿using statistics.Shared.Report.Interfaces;
+using System;
 using System.Collections.Generic;
 using TrackerClient;
 using TrackerClient.JsonModels;
@@ -7,16 +8,13 @@ namespace statistics.Shared.Report.Models
 {
     public class Mediainfos : ICountable
     {
-        private List<Mediainfo> mediainfos;
+        private List<Mediainfo> mediainfos = new List<Mediainfo>();
         public Mediainfo[] Media => mediainfos.ToArray(); 
         public int Count => mediainfos.Count;
-        public Mediainfos()
-        {
-            mediainfos = new List<Mediainfo>();
-        }
-        public Mediainfos(params Topic[] topics)
+        public Mediainfos(int[] topicsIds)
         {
             Tracker tc = new Tracker();
+            Topic[] topics = tc.GetTopics(topicsIds).Result;
             mediainfos = tc.GetMediainfos(topics).Result;
         }
     }

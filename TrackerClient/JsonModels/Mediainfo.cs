@@ -18,7 +18,7 @@ namespace TrackerClient.JsonModels
         [JsonProperty("name")]
         public string Name { get; set; }
         [JsonProperty("width")]
-        public int Width { get; set; }
+        public string Width { get; set; }
         [JsonProperty("height")]
         public string Height { get; set; }
         [JsonProperty("thumb_url")]
