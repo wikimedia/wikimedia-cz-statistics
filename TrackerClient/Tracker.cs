@@ -50,7 +50,12 @@ namespace TrackerClient
             string respString = await resp.Content.ReadAsStringAsync();
             return JObject.Parse(respString).ToObject<Topic>();
         }
-
+        public async Task<Topic[]> GetTopics()
+        {
+            var resp = await _http.GetAsync($"tracker/topics");
+            string respString = await resp.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<Topic[]>(respString);
+        }
         public async Task<Topic[]> GetTopics(int[] ids)
         {
             Topic[] res = new Topic[ids.Length];
